@@ -19,18 +19,10 @@
             android:paddingLeft="5dp" />
 
         <TextView
-            android:id="@+id/photo_albumId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/photo_id"
-            android:layout_toRightOf="@+id/photo_thumbnail"
-            android:paddingLeft="5dp" />
-
-        <TextView
             android:id="@+id/photo_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/photo_albumId"
+            android:layout_below="@id/photo_id"
             android:layout_toRightOf="@+id/photo_thumbnail"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:paddingLeft="5dp"/>

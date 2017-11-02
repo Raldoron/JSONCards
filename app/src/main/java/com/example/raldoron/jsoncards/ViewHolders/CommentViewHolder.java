@@ -13,7 +13,6 @@ import com.example.raldoron.jsoncards.R;
 
 public class CommentViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView postId;
     private TextView id;
     private TextView name;
     private TextView email;
@@ -21,7 +20,6 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
 
     public CommentViewHolder(View itemView) {
         super(itemView);
-        postId = (TextView) itemView.findViewById(R.id.comment_postId);
         id = (TextView) itemView.findViewById(R.id.comment_id);
         name = (TextView) itemView.findViewById(R.id.comment_name);
         email = (TextView) itemView.findViewById(R.id.comment_email);
@@ -29,10 +27,22 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void fillCommentViewHolder(Comment comment){
-        this.postId.setText(this.itemView.getResources().getString(R.string.post_id_title, comment.getPostId()));
-        this.id.setText(this.itemView.getResources().getString(R.string.id_title, comment.getId()));
-        this.name.setText(comment.getName());
-        this.email.setText(comment.getEmail());
-        this.body.setText(comment.getBody());
+        this.id.setText(this.itemView.getResources().getString(
+                R.string.comment_header,
+                comment.getId(),
+                comment.getPostId()
+        ));
+        this.name.setText(this.itemView.getResources().getString(
+                R.string.comment_name,
+                comment.getName()
+        ));
+        this.email.setText(this.itemView.getResources().getString(
+                R.string.comment_email,
+                comment.getEmail()
+        ));
+        this.body.setText(this.itemView.getResources().getString(
+                R.string.comment_body,
+                comment.getBody()
+        ));
     }
 }

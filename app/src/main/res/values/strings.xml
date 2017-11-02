@@ -5,10 +5,20 @@
     <string name="tab_contact">Contacts</string>
 
     <string name="user_string">ID: %1$d, %2$s (%3$s, %4$s)</string>
-    <string name="post_id_title">Post ID: %1$d</string>
-    <string name="user_id_title">User ID: %1$d</string>
-    <string name="album_id_title">Album ID: %1$d</string>
-    <string name="id_title">ID: %1$d</string>
-    <string name="todo_title">Todo: %1$s</string>
-    <string name="todo_completed">Completed: %1$b</string>
+
+    <string name="post_header">Post (ID: %1$d, User ID: %2$d)</string>
+    <string name="post_title">Title: %1$s</string>
+    <string name="post_body">Body: %1$s</string>
+
+    <string name="comment_header">Comment (ID: %1$d, Post ID: %2$d)</string>
+    <string name="comment_name">Name: %1$s</string>
+    <string name="comment_email">Email: %1$s</string>
+    <string name="comment_body">Body: %1$s</string>
+
+    <string name="photo_header">Photo (ID: %1$d, Album ID: %2$d)</string>
+    <string name="photo_title">Title: %1$s</string>
+
+    <string name="todo_title">ToDo (ID: %1$d)</string>
+    <string name="todo_title_string">Todo: %1$s</string>
+    <string name="todo_completed_string">Completed: %1$b</string>
 </resources>

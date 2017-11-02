@@ -25,8 +25,8 @@ public class TodoViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void fillTodoViewHolder(Todo todo){
-        this.id.setText(this.itemView.getResources().getString(R.string.id_title, todo.getId()));
-        this.title.setText(this.itemView.getResources().getString(R.string.todo_title, todo.getTitle()));
-        this.completed.setText(this.itemView.getResources().getString(R.string.todo_completed, todo.getCompleted()));
+        this.id.setText(this.itemView.getResources().getString(R.string.todo_title, todo.getId()));
+        this.title.setText(this.itemView.getResources().getString(R.string.todo_title_string, todo.getTitle()));
+        this.completed.setText(this.itemView.getResources().getString(R.string.todo_completed_string, todo.getCompleted()));
     }
 }
