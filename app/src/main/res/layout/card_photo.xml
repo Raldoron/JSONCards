@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/CardStyle">
+
+    <RelativeLayout
+        style="@style/CardContentStyle">
+
+        <ImageView
+            android:id="@+id/photo_thumbnail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/photo_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/photo_thumbnail"
+            android:paddingLeft="5dp" />
+
+        <TextView
+            android:id="@+id/photo_albumId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/photo_id"
+            android:layout_toRightOf="@+id/photo_thumbnail"
+            android:paddingLeft="5dp" />
+
+        <TextView
+            android:id="@+id/photo_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/photo_albumId"
+            android:layout_toRightOf="@+id/photo_thumbnail"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:paddingLeft="5dp"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

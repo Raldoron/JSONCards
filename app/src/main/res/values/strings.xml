@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">JSON Cards</string>
+
+    <string name="tab_cards">Cards</string>
+    <string name="tab_contact">Contacts</string>
+
+    <string name="user_string">ID: %1$d, %2$s (%3$s, %4$s)</string>
+    <string name="post_id_title">Post ID: %1$d</string>
+    <string name="user_id_title">User ID: %1$d</string>
+    <string name="album_id_title">Album ID: %1$d</string>
+    <string name="id_title">ID: %1$d</string>
+    <string name="todo_title">Todo: %1$s</string>
+    <string name="todo_completed">Completed: %1$b</string>
+</resources>
