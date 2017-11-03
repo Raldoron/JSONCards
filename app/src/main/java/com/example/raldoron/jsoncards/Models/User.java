@@ -25,6 +25,9 @@ public class User {
     @Expose
     private String email;
 
+    public User(){
+    }
+
     public User(User user) {
         this.id = user.id;
         this.name = user.name;

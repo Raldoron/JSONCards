@@ -25,6 +25,9 @@ public class Post {
     @Expose
     private String body;
 
+    public Post(){
+    }
+
     public Post(Post post) {
         this.userId = post.userId;
         this.id = post.id;

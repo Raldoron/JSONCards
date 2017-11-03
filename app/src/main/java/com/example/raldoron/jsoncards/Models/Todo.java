@@ -24,6 +24,9 @@ public class Todo {
     @Expose
     private Boolean completed;
 
+    public Todo(){
+    }
+
     public Todo (Todo todo){
         this.userId = todo.userId;
         this.id = todo.id;

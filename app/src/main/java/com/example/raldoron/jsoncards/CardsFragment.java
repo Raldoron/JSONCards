@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.raldoron.jsoncards.Models.Comment;
 import com.example.raldoron.jsoncards.Models.Photo;
@@ -17,6 +18,7 @@ import com.example.raldoron.jsoncards.Models.Todo;
 import com.example.raldoron.jsoncards.Models.User;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import retrofit2.Response;
@@ -29,6 +31,12 @@ public class CardsFragment extends Fragment {
 
     private static final String CARDSFRAGMENT_TAG = "CardsFragment";
 
+    private static final int POST_POSITION = 0;
+    private static final int COMMENT_POSITION = 1;
+    private static final int USER_POSITION = 2;
+    private static final int PHOTO_POSITION = 3;
+    private static final int TODO_POSITION = 4;
+
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private JsonResoursesAdapter adapter;
@@ -40,8 +48,13 @@ public class CardsFragment extends Fragment {
     private Todo todo;
 
     private int randomTodoID;
+    private static final int photoID = 3;
 
     private ArrayList cards;
+    private static final int CARDS_CAPACITY = 5;
+    private static final int MAX_POST_ID = 100;
+    private static final int MAX_COMMENT_ID = 500;
+
     private JsonClient jsonClient;
 
     public CardsFragment () {}
@@ -70,7 +83,15 @@ public class CardsFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        cards = new ArrayList();
+        cards = new ArrayList(CARDS_CAPACITY);
+
+        post = new Post();
+        comment = new Comment();
+        user = new User();
+        photo = new Photo();
+        todo = new Todo();
+        cards.addAll(Arrays.asList(post, comment, user, photo, todo));
+
         randomTodoID = new Random().nextInt(200) + 1;
 
         jsonClient = new JsonClient(new JsonClient.PostListener() {
@@ -78,8 +99,7 @@ public class CardsFragment extends Fragment {
             public void onSuccess(Response<Post> response) {
                 if (response.isSuccessful()) {
                     post = new Post(response.body());
-                    adapter.add(post);
-                    recyclerView.setAdapter(adapter);
+                    updateData(post);
                 } else {
                     Log.d(CARDSFRAGMENT_TAG, "Post response");
                 }
@@ -94,8 +114,7 @@ public class CardsFragment extends Fragment {
             public void onSuccess(Response<Comment> response) {
                 if (response.isSuccessful()) {
                     comment = new Comment(response.body());
-                    adapter.add(comment);
-                    recyclerView.setAdapter(adapter);
+                    updateData(comment);
                 } else {
                     Log.d(CARDSFRAGMENT_TAG, "Comment response");
                 }
@@ -110,8 +129,7 @@ public class CardsFragment extends Fragment {
             public void onSuccess(Response<User> response) {
                 if (response.isSuccessful()) {
                     user = new User(response.body());
-                    adapter.add(user);
-                    recyclerView.setAdapter(adapter);
+                    updateData(user);
                 } else {
                     Log.d(CARDSFRAGMENT_TAG, "User response");
                 }
@@ -126,8 +144,7 @@ public class CardsFragment extends Fragment {
             public void onSuccess(Response<Photo> response) {
                 if (response.isSuccessful()) {
                     photo = new Photo(response.body());
-                    adapter.add(photo);
-                    recyclerView.setAdapter(adapter);
+                    updateData(photo);
                 } else {
                     Log.d(CARDSFRAGMENT_TAG, "Photo response");
                 }
@@ -142,8 +159,7 @@ public class CardsFragment extends Fragment {
             public void onSuccess(Response<Todo> response) {
                 if (response.isSuccessful()){
                     todo = new Todo(response.body());
-                    adapter.add(todo);
-                    recyclerView.setAdapter(adapter);
+                    updateData(todo);
                 } else {
                     Log.d(CARDSFRAGMENT_TAG, "Todo response");
                 }
@@ -158,10 +174,55 @@ public class CardsFragment extends Fragment {
         jsonClient.getPost(1);
         jsonClient.getComment(1);
         jsonClient.getUser(1);
-        jsonClient.getPhoto(1);
+        jsonClient.getPhoto(photoID);
         jsonClient.getTodo(randomTodoID);
 
-        adapter = new JsonResoursesAdapter(cards);
+        adapter = new JsonResoursesAdapter(
+                cards,
+                new JsonResoursesAdapter.PostButtonListener() {
+                    @Override
+                    public void onClick(int postId) {
+                        if (postId != 0) {
+                            if (postId < MAX_POST_ID) {
+                                jsonClient.getPost(postId);
+                            } else {
+                                Toast.makeText(getContext(), "Post ID shouldn't be greater than 100", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+                },
+                new JsonResoursesAdapter.CommentButtonListener() {
+                    @Override
+                    public void onClick(int commentId) {
+                        if (commentId != 0) {
+                            if (commentId < MAX_COMMENT_ID) {
+                                jsonClient.getComment(commentId);
+                            } else {
+                                Toast.makeText(getContext(), "Comment ID shouldn't be greater than 500", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+                }
+        );
         recyclerView.setAdapter(adapter);
     }
+
+    private void updateData(Object object){
+        int index;
+        if (object instanceof Post){
+            index = POST_POSITION;
+        } else if (object instanceof Comment){
+            index = COMMENT_POSITION;
+        } else if (object instanceof User){
+            index = USER_POSITION;
+        } else if (object instanceof Photo){
+            index = PHOTO_POSITION;
+        } else {
+            index = TODO_POSITION;
+        }
+        cards.set(index, object);
+        adapter.update(cards);
+        recyclerView.setAdapter(adapter);
+    }
+
 }

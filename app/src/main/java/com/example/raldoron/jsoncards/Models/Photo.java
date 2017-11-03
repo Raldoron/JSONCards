@@ -29,6 +29,9 @@ public class Photo {
     @Expose
     private String thumbnailUrl;
 
+    public Photo(){
+    }
+
     public Photo (Photo photo){
         this.albumId = photo.albumId;
         this.id = photo.id;

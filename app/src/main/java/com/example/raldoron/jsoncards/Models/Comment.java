@@ -29,6 +29,9 @@ public class Comment {
     @Expose
     private String body;
 
+    public Comment(){
+    }
+
     public Comment(Comment comment) {
         this.postId = comment.postId;
         this.id = comment.id;

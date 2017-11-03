@@ -24,15 +24,23 @@ import java.util.ArrayList;
 
 public class JsonResoursesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private ArrayList cards;
     private static final int POST_TYPE = 0;
     private static final int COMMENT_TYPE = 1;
     private static final int USER_TYPE = 2;
     private static final int PHOTO_TYPE = 3;
     private static final int TODO_TYPE = 4;
 
-    public JsonResoursesAdapter(ArrayList posts){
+    private ArrayList cards;
+    private PostButtonListener postButtonListener;
+    private CommentButtonListener commentButtonListener;
+
+    public JsonResoursesAdapter(
+            ArrayList posts,
+            PostButtonListener postButtonListener,
+            CommentButtonListener commentButtonListener){
         this.cards = posts;
+        this.postButtonListener = postButtonListener;
+        this.commentButtonListener = commentButtonListener;
     }
 
     @Override
@@ -61,12 +69,26 @@ public class JsonResoursesAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (holder.getItemViewType()){
             case POST_TYPE:
-                PostViewHolder postViewHolder = (PostViewHolder) holder;
-                postViewHolder.fillPostViewHolder((Post) cards.get(position));
+                final PostViewHolder postViewHolder = (PostViewHolder) holder;
+                postViewHolder.fillPostViewHolder(
+                        (Post) cards.get(position),
+                        new PostViewHolder.ConfirmButtonListener() {
+                            @Override
+                            public void onConfirmButtonClick() {
+                                postButtonListener.onClick(postViewHolder.getInputValue());
+                            }
+                        });
                 break;
             case COMMENT_TYPE:
-                CommentViewHolder commentViewHolder = (CommentViewHolder) holder;
-                commentViewHolder.fillCommentViewHolder((Comment) cards.get(position));
+                final CommentViewHolder commentViewHolder = (CommentViewHolder) holder;
+                commentViewHolder.fillCommentViewHolder(
+                        (Comment) cards.get(position),
+                        new CommentViewHolder.ConfirmButtonListener() {
+                            @Override
+                            public void onConfirmButtonClick() {
+                                commentButtonListener.onClick(commentViewHolder.getInputValue());
+                            }
+                        });
                 break;
             case USER_TYPE:
                 UserViewHolder userViewHolder = (UserViewHolder) holder;
@@ -103,19 +125,15 @@ public class JsonResoursesAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
-    public void add(Post post){
-        this.cards.add(post);
+    public void update(ArrayList newList){
+        this.cards = newList;
     }
-    public void add(Comment comment){
-        this.cards.add(comment);
+
+    public interface PostButtonListener {
+        void onClick(int postId);
     }
-    public void add(User user){
-        this.cards.add(user);
-    }
-    public void add(Photo photo){
-        this.cards.add(photo);
-    }
-    public void add(Todo todo){
-        this.cards.add(todo);
+
+    public interface CommentButtonListener {
+        void onClick(int commentId);
     }
 }
