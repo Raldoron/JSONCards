@@ -9,7 +9,7 @@ import com.example.raldoron.jsoncards.Models.Comment;
 import com.example.raldoron.jsoncards.Models.Photo;
 import com.example.raldoron.jsoncards.Models.Post;
 import com.example.raldoron.jsoncards.Models.Todo;
-import com.example.raldoron.jsoncards.Models.User;
+import com.example.raldoron.jsoncards.Models.Users;
 import com.example.raldoron.jsoncards.ViewHolders.CommentViewHolder;
 import com.example.raldoron.jsoncards.ViewHolders.PhotoViewHolder;
 import com.example.raldoron.jsoncards.ViewHolders.PostViewHolder;
@@ -26,7 +26,7 @@ public class JsonResoursesAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     private static final int POST_TYPE = 0;
     private static final int COMMENT_TYPE = 1;
-    private static final int USER_TYPE = 2;
+    private static final int USERS_TYPE = 2;
     private static final int PHOTO_TYPE = 3;
     private static final int TODO_TYPE = 4;
 
@@ -52,7 +52,7 @@ public class JsonResoursesAdapter extends RecyclerView.Adapter<RecyclerView.View
             case COMMENT_TYPE:
                 View viewComment = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_comment, parent, false);
                 return new CommentViewHolder(viewComment);
-            case USER_TYPE:
+            case USERS_TYPE:
                 View viewUser = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_user, parent, false);
                 return new UserViewHolder(viewUser);
             case PHOTO_TYPE:
@@ -90,9 +90,9 @@ public class JsonResoursesAdapter extends RecyclerView.Adapter<RecyclerView.View
                             }
                         });
                 break;
-            case USER_TYPE:
+            case USERS_TYPE:
                 UserViewHolder userViewHolder = (UserViewHolder) holder;
-                userViewHolder.fillUserViewHolder((User) cards.get(position));
+                userViewHolder.fillUserViewHolder((Users) cards.get(position));
                 break;
             case PHOTO_TYPE:
                 PhotoViewHolder photoViewHolder = (PhotoViewHolder) holder;
@@ -116,8 +116,8 @@ public class JsonResoursesAdapter extends RecyclerView.Adapter<RecyclerView.View
             return POST_TYPE;
         } else if (this.cards.get(position) instanceof Comment) {
             return COMMENT_TYPE;
-        } else if (this.cards.get(position) instanceof User) {
-            return USER_TYPE;
+        } else if (this.cards.get(position) instanceof Users) {
+            return USERS_TYPE;
         } else if (this.cards.get(position) instanceof Photo) {
             return PHOTO_TYPE;
         } else {

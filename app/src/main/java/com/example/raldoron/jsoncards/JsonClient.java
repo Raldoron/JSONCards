@@ -5,6 +5,7 @@ import com.example.raldoron.jsoncards.Models.Photo;
 import com.example.raldoron.jsoncards.Models.Post;
 import com.example.raldoron.jsoncards.Models.Todo;
 import com.example.raldoron.jsoncards.Models.User;
+import com.example.raldoron.jsoncards.Models.Users;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -72,22 +73,28 @@ public class JsonClient {
         void onFailure(Throwable throwable);
     }
 
-    public void getUser(int userId){
-        JsonPlaceholder.getAPI().getUser(userId).enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                userListener.onSuccess(response);
-            }
+    public void getUsers(final int ... userId){
+        final Users users = new Users();
+        for(int i = 0, count = userId.length; i<count; ++i) {
+            JsonPlaceholder.getAPI().getUser(userId[i]).enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    users.add(response.body());
+                    if(users.size() == userId.length) {
+                        userListener.onSuccess(users);
+                    }
+                }
 
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                userListener.onFailure(t);
-            }
-        });
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    userListener.onFailure(t);
+                }
+            });
+        }
     }
 
     public interface UserListener{
-        void onSuccess(Response<User> response);
+        void onSuccess(Users users);
         void onFailure(Throwable throwable);
     }
 

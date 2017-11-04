@@ -15,7 +15,7 @@ import com.example.raldoron.jsoncards.Models.Comment;
 import com.example.raldoron.jsoncards.Models.Photo;
 import com.example.raldoron.jsoncards.Models.Post;
 import com.example.raldoron.jsoncards.Models.Todo;
-import com.example.raldoron.jsoncards.Models.User;
+import com.example.raldoron.jsoncards.Models.Users;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +33,7 @@ public class CardsFragment extends Fragment {
 
     private static final int POST_POSITION = 0;
     private static final int COMMENT_POSITION = 1;
-    private static final int USER_POSITION = 2;
+    private static final int USERS_POSITION = 2;
     private static final int PHOTO_POSITION = 3;
     private static final int TODO_POSITION = 4;
 
@@ -43,7 +43,7 @@ public class CardsFragment extends Fragment {
 
     private Post post;
     private Comment comment;
-    private User user;
+    private Users users;
     private Photo photo;
     private Todo todo;
 
@@ -84,13 +84,12 @@ public class CardsFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         cards = new ArrayList(CARDS_CAPACITY);
-
+        users = new Users();
         post = new Post();
         comment = new Comment();
-        user = new User();
         photo = new Photo();
         todo = new Todo();
-        cards.addAll(Arrays.asList(post, comment, user, photo, todo));
+        cards.addAll(Arrays.asList(post, comment, users, photo, todo));
 
         randomTodoID = new Random().nextInt(200) + 1;
 
@@ -126,10 +125,10 @@ public class CardsFragment extends Fragment {
             }
         }, new JsonClient.UserListener() {
             @Override
-            public void onSuccess(Response<User> response) {
-                if (response.isSuccessful()) {
-                    user = new User(response.body());
-                    updateData(user);
+            public void onSuccess(Users users) {
+                if (users != null) {
+                    users.sort();
+                    updateData(users);
                 } else {
                     Log.d(CARDSFRAGMENT_TAG, "User response");
                 }
@@ -173,7 +172,7 @@ public class CardsFragment extends Fragment {
 
         jsonClient.getPost(1);
         jsonClient.getComment(1);
-        jsonClient.getUser(1);
+        jsonClient.getUsers(1, 2, 3, 4, 5);
         jsonClient.getPhoto(photoID);
         jsonClient.getTodo(randomTodoID);
 
@@ -213,8 +212,8 @@ public class CardsFragment extends Fragment {
             index = POST_POSITION;
         } else if (object instanceof Comment){
             index = COMMENT_POSITION;
-        } else if (object instanceof User){
-            index = USER_POSITION;
+        } else if (object instanceof Users){
+            index = USERS_POSITION;
         } else if (object instanceof Photo){
             index = PHOTO_POSITION;
         } else {
