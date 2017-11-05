@@ -27,4 +27,8 @@
     <string name="todo_title_string">Todo: %1$s</string>
     <string name="todo_completed_string">Completed: %1$b</string>
 
+    <string name="author_name">Aleksey Kirsanov</string>
+    <string name="author_phone_number">+7&#8211;925&#8211;619&#8211;56&#8211;85</string>
+    <string name="author_email">kirs1393@gmail.com</string>
+
 </resources>

@@ -6,4 +6,5 @@ package com.example.raldoron.jsoncards;
 
 public class Config {
     public static final String JSONPlaceholder_URL = "https://jsonplaceholder.typicode.com";
+
 }

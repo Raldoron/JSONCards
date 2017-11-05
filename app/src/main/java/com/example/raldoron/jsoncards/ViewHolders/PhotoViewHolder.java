@@ -38,7 +38,7 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
         ));
         if (photo.getThumbnailUrl() != null) {
             Picasso.with(this.itemView.getContext())
-                    .load(photo.getThumbnailUrl())
+                    .load(photo.getUrl())
                     .into(this.thumbnail);
         }
     }
