@@ -36,7 +36,7 @@ public class Users {
         Collections.sort(users, new Comparator<User>() {
             @Override
             public int compare(User o1, User o2) {
-                return o1.getId() - o2.getId();
+                return Integer.compare(o1.getId(), o2.getId());
             }
         });
     }
